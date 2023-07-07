@@ -1,7 +1,7 @@
 import os
 import glob
 from pdfminer.high_level import extract_text
-from modules.tokenization.tokenizer import tokenize_file
+from modules.tokenization.preprocess_file import tokenize_file
 from repo.bookcheck import BookRepository
 
 class PdfService:
@@ -19,8 +19,8 @@ class PdfService:
 
             text = self.read_pdf(file_path)
             if text:
-                file_tokens = self.tokenize_pdf(text)
-                print(f"File: {file_path}, Token Count: {len(file_tokens)}")
+                file_tokens = self.tokenize_pdf(text, file_path)
+                # print(f"File: {file_path}, Token Count: {len(file_tokens)}")
                 self.book_repository.add_book(file_path)
 
     def read_pdf(self, file_path):
@@ -31,5 +31,5 @@ class PdfService:
             print(f"File not found: {file_path}")
             return ""
 
-    def tokenize_pdf(self, text):
-        return tokenize_file(text)
+    def tokenize_pdf(self, text, file_path):
+        return tokenize_file(text, file_path)
